@@ -1,4 +1,4 @@
-package co.com.personalsoft.domain;
+package co.com.personalsoft.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
