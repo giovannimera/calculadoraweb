@@ -41,10 +41,6 @@ dependencies {
     
 }
 
-tomcatRun.contextPath = 'http://localhost:8055/'
-tomcatRunWar.contextPath = 'http://localhost:8055/'
-
-
 test {
     systemProperties 'property': 'value'
 }
