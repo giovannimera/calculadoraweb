@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
 
 
 sourceCompatibility = 1.8
@@ -13,6 +14,16 @@ jar {
                    'Implementation-Version': version
     }
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
+    }
+}
+
 
 repositories {
     mavenCentral()
