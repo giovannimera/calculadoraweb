@@ -2,8 +2,11 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'war'
 
-sourceCompatibility = 1.5
+
+sourceCompatibility = 1.8
 version = '1.0'
+war.baseName = 'calculadoraweb-war'
+project.webAppDirName = 'WebContent'
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart',
@@ -11,38 +14,25 @@ jar {
     }
 }
 
-configurations {
-   moreLibs
-}
-
 repositories {
-	flatDir { dirs "lib" }
-   	jcenter()
     mavenCentral()
 }
 
 dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
-    compile module(":compile:1.0") {
-        dependency ":compile-transitive-1.0@jar"
-        dependency ":providedCompile-transitive:1.0@jar"
-    }
-    providedCompile "javax.servlet:servlet-api:2.5"
-    providedCompile module(":providedCompile:1.0") {
-        dependency ":providedCompile-transitive:1.0@jar"
-    }
-    runtime ":runtime:1.0"
-    providedRuntime ":providedRuntime:1.0@jar"
     testCompile group: 'junit', name: 'junit', version: '4.+'
+    def tomcatVersion = '8.0.48'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+    
 }
 
-war {
-    from 'src' // adds a file-set to the root of the archive
-    webInf { from 'WebContent/WEB-INF' } // adds a file-set to the WEB-INF dir.
-    classpath fileTree('WebContent/WEB-INF/lib') // adds a file-set to the WEB-INF/lib dir.
-    classpath configurations.moreLibs // adds a configuration to the WEB-INF/lib dir.
-    webXml = file('WebContent/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
-}
+tomcatRun.contextPath = 'http://localhost:8055/'
+tomcatRunWar.contextPath = 'http://localhost:8055/'
+
 
 test {
     systemProperties 'property': 'value'
