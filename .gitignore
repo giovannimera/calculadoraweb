@@ -6,6 +6,5 @@ bin
 .project
 .settings/*
 .gradle/
-build/
 tmp
 .tmp
